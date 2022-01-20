@@ -45,12 +45,25 @@
 (use-package ox-reveal
   :ensure t)
 
+;; Magit is a git porcelain (wrapper) within emacs
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status)
+  :config (setq magit-diff-refine-hunk 'all))
+
+;; Undo tree allows you to visualize the tree of previous changes using M-x undo-tree-visualize
 (use-package undo-tree
   :ensure t
   :diminish undo-tree-mode
   :config (progn (global-undo-tree-mode 1)
                  (setq undo-tree-visualizer-timestamps t)
                  (setq undo-tree-visualizer-diff t)))
+
+;; Which Key suggests command complaetions with C-[]
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :init (which-key-mode))
 
 ;; Org-Semantic Search Library
 (use-package semantic-search
@@ -62,12 +75,20 @@
 ;; ===================================
 
 (setq inhibit-startup-message t)    ;; Hide the startup message
-(setq org-agenda-files '("c:/Users/Saba Imran/Documents/notes/notes.org")) ;; Add org file to org-agenda files
+(setq
+ org-agenda-files '("/home/saba/notes/notes.org") ;; Add org file to org-agenda files
+ org-agenda-todo-ignore-scheduled 'all ;; Ignore TODOs with schedules
+ org-agenda-todo-ignore-deadlines 'all ;; Ignore TODOs with deadline
+ org-agenda-tags-todo-honor-ignore-options t
+
+ org-agenda-custom-commands
+ '(
+   ("A" "Immediate Tasks" todo "TODO"))) ;; Creates custom org agenda cmd to list tasks of the specified TODO types
+
 (setq js-comint-program-command "node") ;; Set node as inferior JS program command.
 (setq js-comint-program-arguments '("--interactive"))
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))             ;; Enable line numbers globally
-(global-set-key (kbd "C-x g") 'magit-status) ;; Set git status key binding
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;; ====================================
@@ -79,6 +100,9 @@
 
 ;; Start-up with soft-wrap enabled
 ;;(setq org-startup-truncated nil)
+
+;; Do not validate on HTML export
+(setq org-html-validation-link nil)
 
 ;; User-Defined init.el ends here
 (custom-set-variables
