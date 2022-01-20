@@ -33,17 +33,27 @@
    :url "https://github.com/quelpa/quelpa-use-package.git"))
 (require 'quelpa-use-package)
 
+;; Some default settings for ease of setup on first run
 (use-package better-defaults
   :ensure t)
 
+;; A python mode for Emacs
 (use-package elpy
   :ensure t)
 
+;; A javascript mode for Emacs
 (use-package js-comint
   :ensure t)
 
+;; A package to export org files to ReactJs presentations
+;; https://github.com/hexmode/ox-reveal
 (use-package ox-reveal
   :ensure t)
+
+;; The :chords keyword allows you to define key-chord bindings for use-package declarations in the same manner as the :bind keyword.
+(use-package use-package-chords
+  :ensure t
+  :config (key-chord-mode 1))
 
 ;; Magit is a git porcelain (wrapper) within emacs
 (use-package magit
@@ -69,6 +79,58 @@
 (use-package semantic-search
   :quelpa (semantic-search :fetcher url :url "https://raw.githubusercontent.com/debanjum/semantic-search/master/interface/emacs/semantic-search.el")
   :bind ("C-c s" . 'semantic-search))
+
+;; Ivy for completion function everywhere where ido isn't used (for now)
+(use-package ivy
+  :ensure t
+  :diminish
+  :bind (("C-c C-r" . ivy-resume)
+         ("C-c C-j" . ivy-immediate-done))
+  :config (progn
+            (ivy-mode)
+            (setq
+             ivy-use-virtual-buffers t
+             enable-recursive-minibuffers t
+             ivy-count-format ""
+             ivy-initial-inputs-alist nil
+             ivy-sort-matches-functions-alist '((t . nil)) ;; To sort most recent first
+             ivy-re-builders-alist '((swiper . ivy--regex-plus)
+                                     (t . ivy--regex-fuzzy)))))
+
+;; Provides completion functions using Ivy.
+(use-package counsel
+  :ensure t
+  :after (ivy use-package-chords)
+  :diminish
+  :chords (("yy" . counsel-yank-pop))
+  :config (progn
+            (counsel-mode)))
+
+;; An enhanced completion front-end to search using Ivy
+(use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper-backward)))
+
+
+;; Including this package resolves a warning in AMX. Replaces stock emacs completion with ido completion wherever it is possible to do so without breaking things.
+(use-package ido-completing-read+
+  :ensure t
+  :config (setq ido-ubiquitous-mode 1))
+
+;; Amx for M-x persistent MRU for auto-completion.
+;; Amx can rely on Ivy via counsel-M-x or ido completion backend for fuzzy candidate matching.
+(use-package amx
+  :ensure t
+  :config (amx-mode))
+
+;; Recentf suggests recently opened files on C-x C-r
+(use-package recentf
+  :ensure t
+  :init (recentf-mode t)
+  :bind ("C-x C-r" . counsel-recentf)
+  :config (setq recentf-max-saved-items 50))
+
 
 ;; ===================================
 ;; Basic Customization
