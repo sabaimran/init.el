@@ -89,6 +89,7 @@
   :config (progn
             (ivy-mode)
             (setq
+             ivy-wrap t
              ivy-use-virtual-buffers t
              enable-recursive-minibuffers t
              ivy-count-format ""
