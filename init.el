@@ -75,10 +75,13 @@
   :diminish which-key-mode
   :init (which-key-mode))
 
-;; Org-Semantic Search Library
+
+;; Khoj Package
 (use-package khoj
-  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/debanjum/khoj/master/interface/emacs/khoj.el")
+  :after org
+  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/debanjum/khoj/master/src/interface/emacs/khoj.el")
   :bind ("C-c s" . 'khoj))
+
 
 ;; Ivy for completion function everywhere where ido isn't used (for now)
 (use-package ivy
