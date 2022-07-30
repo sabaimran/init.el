@@ -69,16 +69,16 @@
                  (setq undo-tree-visualizer-timestamps t)
                  (setq undo-tree-visualizer-diff t)))
 
-;; Which Key suggests command complaetions with C-[]
+;; Which Key suggests command completions with C-[]
 (use-package which-key
   :ensure t
   :diminish which-key-mode
   :init (which-key-mode))
 
 ;; Org-Semantic Search Library
-(use-package semantic-search
-  :quelpa (semantic-search :fetcher url :url "https://raw.githubusercontent.com/debanjum/semantic-search/master/interface/emacs/semantic-search.el")
-  :bind ("C-c s" . 'semantic-search))
+(use-package khoj
+  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/debanjum/khoj/master/interface/emacs/khoj.el")
+  :bind ("C-c s" . 'khoj))
 
 ;; Ivy for completion function everywhere where ido isn't used (for now)
 (use-package ivy
