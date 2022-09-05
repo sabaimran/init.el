@@ -135,6 +135,22 @@
   :bind ("C-x C-r" . counsel-recentf)
   :config (setq recentf-max-saved-items 50))
 
+;; Darkroom mode provides a more focused writing environment
+;; https://github.com/joaotavora/darkroom
+(use-package darkroom-mode
+  :ensure t)
+
+;; Writeroom mode provides an even more focused writing environment
+;; https://github.com/joostkremers/writeroom-mode
+(use-package writeroom-mode
+  :ensure t
+  :bind ("C-x w" . writeroom-mode))
+
+;; Enable smoother scrolling inside the window
+;; https://github.com/io12/good-scroll.el
+(use-package good-scroll
+  :init (good-scroll-mode)
+  :ensure t)
 
 ;; ===================================
 ;; Basic Customization
