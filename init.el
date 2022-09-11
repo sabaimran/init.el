@@ -173,6 +173,9 @@
   (global-display-line-numbers-mode))             ;; Enable line numbers globally
 (global-set-key (kbd "C-c a") 'org-agenda)
 
+(good-scroll-mode 1)
+
+
 ;; ====================================
 ;; Development Setup
 ;; ====================================
