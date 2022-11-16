@@ -135,11 +135,6 @@
   :bind ("C-x C-r" . counsel-recentf)
   :config (setq recentf-max-saved-items 50))
 
-;; Darkroom mode provides a more focused writing environment
-;; https://github.com/joaotavora/darkroom
-(use-package darkroom-mode
-  :ensure t)
-
 ;; Writeroom mode provides an even more focused writing environment
 ;; https://github.com/joostkremers/writeroom-mode
 (use-package writeroom-mode
@@ -166,6 +161,14 @@
  org-agenda-custom-commands
  '(
    ("A" "Immediate Tasks" todo "TODO"))) ;; Creates custom org agenda cmd to list tasks of the specified TODO types
+
+;; Create a capture template for work-related tasks
+(setq org-capture-templates
+      '(("w" "Create new todo" entry (file+headline "~/notes/probablygenetic.org" "Active")
+         "* TODO %?\n :PROPERTIES:\n :CREATED: %t\n  :WORKITEM:\n :OKR:\n :END:")
+        ("g" "Gratitute entry" entry (file+olp "~/notes/notes.org" "Areas" "Gratitude")
+         "* TODO %?\n :SCHEDULED: %t\n1.\n2.\n3.\n\n")
+        ))
 
 (setq js-comint-program-command "node") ;; Set node as inferior JS program command.
 (setq js-comint-program-arguments '("--interactive"))
