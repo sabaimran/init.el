@@ -82,6 +82,15 @@
   :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/debanjum/khoj/master/src/interface/emacs/khoj.el")
   :bind ("C-c s" . 'khoj))
 
+; Required for displaying emojis
+(use-package all-the-icons
+  :ensure t)
+
+; Add emojify https://github.com/iqbalansari/emacs-emojify/tree/cfa00865388809363df3f884b4dd554a5d44f835
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+
+;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
 
 ;; Ivy for completion function everywhere where ido isn't used (for now)
 (use-package ivy
