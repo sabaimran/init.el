@@ -173,10 +173,12 @@
 
 ;; Create a capture template for work-related tasks
 (setq org-capture-templates
-      '(("w" "Create new todo" entry (file+headline "~/notes/probablygenetic.org" "Active")
+      '(("wo" "Create new todo" entry (file+headline "~/notes/probablygenetic.org" "Active")
          "* TODO %?\n :PROPERTIES:\n :CREATED: %t\n  :WORKITEM:\n :OKR:\n :END:")
         ("g" "Gratitute entry" entry (file+olp "~/notes/notes.org" "Areas" "Gratitude")
          "* TODO %?\n :SCHEDULED: %t\n1.\n2.\n3.\n\n")
+        ("w" "Create new Khoj todo" entry (file+headline "~/notes/khoj.org" "Active")
+         "* TODO %?\n :PROPERTIES:\n :CREATED: %t\n  :WORKITEM:\n :END:")
         ))
 
 (setq js-comint-program-command "node") ;; Set node as inferior JS program command.
