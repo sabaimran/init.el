@@ -79,8 +79,10 @@
 ;; Khoj Package
 (use-package khoj
   :after org
-  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/debanjum/khoj/master/src/interface/emacs/khoj.el")
+  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/khoj-ai/khoj/master/src/interface/emacs/khoj.el")
   :bind ("C-c s" . 'khoj))
+
+;; To upgrade^ run C-u M-x quelpa RET. Then enter package name.
 
 ; Required for displaying emojis
 (use-package all-the-icons
@@ -155,6 +157,11 @@
 (use-package good-scroll
   :init (good-scroll-mode)
   :ensure t)
+
+;; Use rainbow delimeters for elisp
+(use-package rainbow-delimiters
+  :ensure t
+  :hook ((emacs-lisp-mode . rainbow-delimiters-mode)))
 
 ;; ===================================
 ;; Basic Customization
