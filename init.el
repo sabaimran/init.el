@@ -7,31 +7,27 @@
 
 ;; Setup Package Managers
 (require 'package)
-(setq package-archives '())
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("elpy" . "http://jorgenschaefer.github.io/packages/") t)
-(package-initialize)
 
-;; Install use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Install Quelpa
-(unless (package-installed-p 'quelpa)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-    (eval-buffer)
-    (quelpa-self-upgrade)))
-
-;; Install Quelpa Use-Package
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://github.com/quelpa/quelpa-use-package.git"))
-(require 'quelpa-use-package)
+;; Integrate use-package with straight.el
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Some default settings for ease of setup on first run
 (use-package better-defaults
@@ -77,10 +73,11 @@
 
 
 ;; Khoj Package
+
 (use-package khoj
   :after org
-  :quelpa (khoj :fetcher url :url "https://raw.githubusercontent.com/khoj-ai/khoj/master/src/interface/emacs/khoj.el")
-  :bind ("C-c s" . 'khoj))
+  :straight (khoj :type git :host github :repo "khoj-ai/khoj" :files ("src/interface/emacs/khoj.el"))
+  :bind ("C-c s" . khoj))
 
 ;; To upgrade^ run C-u M-x quelpa RET. Then enter package name.
 
